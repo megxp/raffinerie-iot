@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface-900 text-gray-100 font-sans;
+  }
+}
+
+@layer components {
+  .led-green {
+    box-shadow: 0 0 8px #22c55e, 0 0 20px #16a34a44;
+  }
+
+  .led-gray {
+    box-shadow: none;
+  }
+
+  .glass {
+    background: rgba(15, 26, 20, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(34, 197, 94, 0.12);
+  }
+
+  .glass-hover:hover {
+    border-color: rgba(34, 197, 94, 0.3);
+    background: rgba(21, 128, 61, 0.08);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(34, 197, 94, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 197, 94, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scan-line {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(34, 197, 94, 0.04) 50%,
+      transparent 100%
+    );
+    animation: scan 4s linear infinite;
+  }
+
+  .range-green::-webkit-slider-thumb {
+    background: #22c55e;
+    box-shadow: 0 0 6px #16a34a;
+  }
+
+  .range-green::-webkit-slider-runnable-track {
+    background: #162112;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-900;
+  }
+
+  .toast {
+    @apply pointer-events-auto flex items-start gap-2 rounded-lg border px-4 py-3 font-mono text-xs shadow-lg transition-all duration-300;
+  }
+
+  .toast--success {
+    @apply border-brand-700/50 bg-surface-800 text-brand-400;
+  }
+
+  .toast--error {
+    @apply border-red-800/50 bg-red-950/80 text-red-300;
+  }
+
+  .toast--info {
+    @apply border-blue-800/50 bg-surface-800 text-blue-300;
+  }
+
+  .toast--hide {
+    @apply translate-x-4 opacity-0;
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: fixed;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+#toast-root .toast {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#toast-root .toast.toast--hide {
+  opacity: 0;
+  transform: translateX(1rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-line {
+    animation: none;
+  }
+
+  #toast-root .toast,
+  #toast-root .toast.toast--hide {
+    transition: none;
+  }
+}
